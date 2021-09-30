@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { BarLoading } from './src';
+import { SquareLoading } from './src';
 
 export default function App() {
     return (
         <View style={styles.container}>
-            <BarLoading />
+            <SquareLoading />
         </View>
     );
 }
