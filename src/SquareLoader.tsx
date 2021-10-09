@@ -8,14 +8,14 @@ const styles = StyleSheet.create({
     bar: {},
 });
 
-interface SquareLoadingProps {
+interface SquareLoaderProps {
     color?: string;
     size?: number;
     duration?: number;
     delay?: number;
 }
 
-const SquareLoading: React.FunctionComponent<SquareLoadingProps> = ({
+const SquareLoader: React.FunctionComponent<SquareLoaderProps> = ({
     color = '#0A57E7',
     size = 50,
     duration = 500,
@@ -91,4 +91,4 @@ const SquareLoading: React.FunctionComponent<SquareLoadingProps> = ({
     );
 };
 
-export default SquareLoading;
+export default SquareLoader;

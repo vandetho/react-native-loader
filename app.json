@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-loading",
-    "slug": "react-native-loading",
+    "name": "react-native-loader",
+    "slug": "react-native-loader",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
