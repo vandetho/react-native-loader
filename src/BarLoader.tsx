@@ -16,7 +16,7 @@ interface BarLoaderProps {
     round?: boolean;
 }
 
-const BarLoader: React.FunctionComponent<BarLoaderProps> = ({
+const BarLoaderComponent: React.FunctionComponent<BarLoaderProps> = ({
     color = '#0A57E7',
     size = 10,
     duration = 300,
@@ -128,5 +128,7 @@ const BarLoader: React.FunctionComponent<BarLoaderProps> = ({
         </View>
     );
 };
+
+const BarLoader  = React.memo(BarLoaderComponent);
 
 export default BarLoader;

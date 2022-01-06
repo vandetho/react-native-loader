@@ -21,7 +21,7 @@ interface CircularLoaderProps {
     duration?: number;
 }
 
-const CircularLoader: React.FunctionComponent<CircularLoaderProps> = ({
+const CircularLoaderComponent: React.FunctionComponent<CircularLoaderProps> = ({
     size = 25,
     color = '#0A57E7',
     duration = 6000,
@@ -90,5 +90,7 @@ const CircularLoader: React.FunctionComponent<CircularLoaderProps> = ({
         </View>
     );
 };
+
+const CircularLoader  = React.memo(CircularLoaderComponent);
 
 export default CircularLoader;

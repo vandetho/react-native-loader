@@ -15,7 +15,7 @@ interface JumpingLoaderProps {
     round?: boolean;
 }
 
-const JumpingLoader: React.FunctionComponent<JumpingLoaderProps> = ({
+const JumpingLoaderComponent: React.FunctionComponent<JumpingLoaderProps> = ({
     color = '#0A57E7',
     size = 10,
     duration = 300,
@@ -77,5 +77,7 @@ const JumpingLoader: React.FunctionComponent<JumpingLoaderProps> = ({
         </View>
     );
 };
+
+const JumpingLoader  = React.memo(JumpingLoaderComponent);
 
 export default JumpingLoader;

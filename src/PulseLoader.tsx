@@ -11,7 +11,7 @@ interface PulseLoaderProps {
     duration?: number;
 }
 
-const PulseLoader: React.FunctionComponent<PulseLoaderProps> = ({ size = 50, color = '#0A57E7', duration = 1000 }) => {
+const PulseLoaderComponent: React.FunctionComponent<PulseLoaderProps> = ({ size = 50, color = '#0A57E7', duration = 1000 }) => {
     const opacityValue = React.useRef(new Animated.Value(0)).current;
 
     React.useEffect(() => {
@@ -35,5 +35,6 @@ const PulseLoader: React.FunctionComponent<PulseLoaderProps> = ({ size = 50, col
         />
     );
 };
+const PulseLoader  = React.memo(PulseLoaderComponent);
 
 export default PulseLoader;

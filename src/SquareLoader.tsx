@@ -15,7 +15,7 @@ interface SquareLoaderProps {
     delay?: number;
 }
 
-const SquareLoader: React.FunctionComponent<SquareLoaderProps> = ({
+const SquareLoaderComponent: React.FunctionComponent<SquareLoaderProps> = ({
     color = '#0A57E7',
     size = 50,
     duration = 500,
@@ -90,5 +90,7 @@ const SquareLoader: React.FunctionComponent<SquareLoaderProps> = ({
         </View>
     );
 };
+
+const SquareLoader  = React.memo(SquareLoaderComponent);
 
 export default SquareLoader;
