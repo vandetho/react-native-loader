@@ -1,13 +1,13 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { BarLoader, JumpingLoader, PulseLoader, SquareLoader } from './src';
+import { BarLoader, BipLoader, FollowLoader, JumpingLoader, PulseLoader, SquareLoader } from './src';
 
 export default function App() {
     return (
         <SafeAreaView>
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.row}>
-                    <BarLoader opacity round />
+                    <BarLoader opacity />
                 </View>
                 <View style={styles.row}>
                     <JumpingLoader round />
@@ -17,6 +17,12 @@ export default function App() {
                 </View>
                 <View style={styles.row}>
                     <PulseLoader />
+                </View>
+                <View style={styles.row}>
+                    <BipLoader />
+                </View>
+                <View style={styles.row}>
+                    <FollowLoader />
                 </View>
             </ScrollView>
         </SafeAreaView>
