@@ -1,6 +1,15 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { BarLoader, BipLoader, CircularLoader, FollowLoader, JumpingLoader, PulseLoader, SquareLoader } from './src';
+import {
+    BarLoader,
+    BipLoader,
+    CircularLoader,
+    FollowLoader,
+    JumpingLoader,
+    PulseLoader,
+    SpinnerLoader,
+    SquareLoader,
+} from './src';
 
 export default function App() {
     return (
@@ -27,6 +36,9 @@ export default function App() {
                 <View style={styles.row}>
                     <CircularLoader />
                 </View>
+                <View style={styles.row}>
+                    <SpinnerLoader />
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -36,6 +48,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
         alignItems: 'center',
+        paddingVertical: 20,
     },
     row: {
         marginVertical: 20,

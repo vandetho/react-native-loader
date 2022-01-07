@@ -1,8 +1,23 @@
 {
     "version": "1.0.0",
+    "name": "react-native-loader",
+    "author": "Vandeth Tho <thovandeth@gmail.com>",
+    "license": "MIT",
     "main": "./node_modules/expo/AppEntry.js",
-    "_main": "./dist/index.js",
-    "typings": "./dist/index.d.ts",
+    "_main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
+    "description": "Display loader animation for react-native and compatible with expo",
+    "keywords": [
+        "react-native",
+        "expo",
+        "loader",
+        "spinner",
+        "animation",
+        "animated"
+    ],
     "scripts": {
         "start": "expo start",
         "android": "expo start --android",

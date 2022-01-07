@@ -4,4 +4,5 @@ export { default as CircularLoader } from './CircularLoader';
 export { default as FollowLoader } from './FollowLoader';
 export { default as JumpingLoader } from './JumpingLoader';
 export { default as PulseLoader } from './PulseLoader';
+export { default as SpinnerLoader } from './SpinnerLoader';
 export { default as SquareLoader } from './SquareLoader';
