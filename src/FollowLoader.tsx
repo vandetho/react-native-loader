@@ -22,7 +22,7 @@ interface FollowLoaderProps {
     round?: boolean;
 }
 
-const FollowLoader = React.memo<FollowLoaderProps>(({ color = '#0A57E7', size = 10, duration = 300, round = true }) => {
+const FollowLoader = React.memo<FollowLoaderProps>(({ color = '#0A57E7', size = 10, duration = 200, round = true }) => {
     const animatedValue = React.useRef(new Animated.Value(0)).current;
 
     const runAnimation = React.useCallback(() => {
@@ -53,258 +53,94 @@ const FollowLoader = React.memo<FollowLoaderProps>(({ color = '#0A57E7', size = 
         [color, round, size],
     );
 
-    const inputRange = React.useMemo(() => [1, 2, 3, 4, 5], []);
+    const inputRange = React.useMemo(() => [0, 1, 2, 3, 4, 5], []);
+
+    const renderDot = React.useCallback(
+        () => (
+            <React.Fragment>
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [1, 0.8, 0.6, 0.4, 0.2, 0],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0.8, 0.6, 0.4, 0.2, 0, 1],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0.6, 0.4, 0.2, 0, 1, 0.8],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0.4, 0.2, 0, 1, 0.8, 0.6],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0.2, 0, 1, 0.8, 0.6, 0.4],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0, 1, 0.8, 0.6, 0.4, 0.2],
+                            }),
+                        },
+                    ]}
+                />
+            </React.Fragment>
+        ),
+        [animatedValue, inputRange, style],
+    );
 
     return (
         <View style={{ flexDirection: 'row' }}>
-            <View style={styles.dotContainer}>
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [1, 0.75, 0.5, 0.25, 0],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.75, 0.5, 0.25, 0, 1],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.5, 0.25, 0, 1, 0.75],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.25, 0, 1, 0.75, 0.5],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0, 1, 0.75, 0.5, 0.25],
-                            }),
-                        },
-                    ]}
-                />
-            </View>
-            <View style={[styles.dotContainer, { paddingTop: 20 }]}>
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [1, 0.75, 0.5, 0.25, 0],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.75, 0.5, 0.25, 0, 1],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.5, 0.25, 0, 1, 0.75],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.25, 0, 1, 0.75, 0.5],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0, 1, 0.75, 0.5, 0.25],
-                            }),
-                        },
-                    ]}
-                />
-            </View>
-            <View style={[styles.dotContainer, { paddingTop: 40 }]}>
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [1, 0.75, 0.5, 0.25, 0],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.75, 0.5, 0.25, 0, 1],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.5, 0.25, 0, 1, 0.75],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.25, 0, 1, 0.75, 0.5],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0, 1, 0.75, 0.5, 0.25],
-                            }),
-                        },
-                    ]}
-                />
-            </View>
-            <View style={[styles.dotContainer, { paddingTop: 60 }]}>
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [1, 0.75, 0.5, 0.25, 0],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.75, 0.5, 0.25, 0, 1],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.5, 0.25, 0, 1, 0.75],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0.25, 0, 1, 0.75, 0.5],
-                            }),
-                        },
-                    ]}
-                />
-                <Animated.View
-                    style={[
-                        styles.bar,
-                        style,
-                        {
-                            opacity: animatedValue.interpolate({
-                                inputRange,
-                                outputRange: [0, 1, 0.75, 0.5, 0.25],
-                            }),
-                        },
-                    ]}
-                />
-            </View>
+            <View style={styles.dotContainer}>{renderDot()}</View>
+            <View style={[styles.dotContainer, { paddingTop: 20 }]}>{renderDot()}</View>
+            <View style={[styles.dotContainer, { paddingTop: 40 }]}>{renderDot()}</View>
+            <View style={[styles.dotContainer, { paddingTop: 60 }]}>{renderDot()}</View>
         </View>
     );
 });

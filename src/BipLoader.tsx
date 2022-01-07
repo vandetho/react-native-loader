@@ -25,21 +25,22 @@ interface BipLoaderProps {
 const BipLoader = React.memo<BipLoaderProps>(({ color = '#0A57E7', size = 10, duration = 300, round = true }) => {
     const animatedValue = React.useRef(new Animated.Value(0)).current;
 
-    React.useEffect(() => {
-        Animated.loop(
-            Animated.sequence([
-                Animated.timing(animatedValue, { toValue: 1, useNativeDriver: true, duration }),
-                Animated.timing(animatedValue, { toValue: 2, useNativeDriver: true, duration }),
-                Animated.timing(animatedValue, { toValue: 3, useNativeDriver: true, duration }),
-                Animated.timing(animatedValue, { toValue: 4, useNativeDriver: true, duration }),
-                Animated.timing(animatedValue, { toValue: 5, useNativeDriver: true, duration }),
-                Animated.timing(animatedValue, { toValue: 4, useNativeDriver: true, duration }),
-                Animated.timing(animatedValue, { toValue: 3, useNativeDriver: true, duration }),
-                Animated.timing(animatedValue, { toValue: 2, useNativeDriver: true, duration }),
-                Animated.timing(animatedValue, { toValue: 1, useNativeDriver: true, duration }),
-            ]),
-        ).start();
+    const runAnimation = React.useCallback(() => {
+        Animated.sequence([
+            Animated.timing(animatedValue, { toValue: 1, useNativeDriver: true, duration }),
+            Animated.timing(animatedValue, { toValue: 2, useNativeDriver: true, duration }),
+            Animated.timing(animatedValue, { toValue: 3, useNativeDriver: true, duration }),
+            Animated.timing(animatedValue, { toValue: 4, useNativeDriver: true, duration }),
+            Animated.timing(animatedValue, { toValue: 5, useNativeDriver: true, duration }),
+        ]).start(() => {
+            animatedValue.setValue(0);
+            runAnimation();
+        });
     }, [animatedValue, duration]);
+
+    React.useEffect(() => {
+        runAnimation();
+    }, [runAnimation]);
 
     const style = React.useMemo(
         () => ({
@@ -54,70 +55,86 @@ const BipLoader = React.memo<BipLoaderProps>(({ color = '#0A57E7', size = 10, du
 
     const inputRange = React.useMemo(() => [0, 1, 2, 3, 4, 5], []);
 
-    return (
-        <View style={{ flexDirection: 'row' }}>
-            <Animated.View
-                style={[
-                    styles.bar,
-                    style,
-                    {
-                        opacity: animatedValue.interpolate({
-                            inputRange,
-                            outputRange: [0, 1, 0.75, 0.5, 0.25, 0],
-                        }),
-                    },
-                ]}
-            />
-            <Animated.View
-                style={[
-                    styles.bar,
-                    style,
-                    {
-                        opacity: animatedValue.interpolate({
-                            inputRange,
-                            outputRange: [1, 0.75, 0.5, 0.25, 0, 1],
-                        }),
-                    },
-                ]}
-            />
-            <Animated.View
-                style={[
-                    styles.bar,
-                    style,
-                    {
-                        opacity: animatedValue.interpolate({
-                            inputRange,
-                            outputRange: [0.75, 0.5, 0.25, 0, 1, 0.75],
-                        }),
-                    },
-                ]}
-            />
-            <Animated.View
-                style={[
-                    styles.bar,
-                    style,
-                    {
-                        opacity: animatedValue.interpolate({
-                            inputRange,
-                            outputRange: [0.5, 0.25, 0, 1, 0.75, 0.5],
-                        }),
-                    },
-                ]}
-            />
-            <Animated.View
-                style={[
-                    styles.bar,
-                    style,
-                    {
-                        opacity: animatedValue.interpolate({
-                            inputRange,
-                            outputRange: [0.25, 0, 1, 0.75, 0.5, 0.25],
-                        }),
-                    },
-                ]}
-            />
-        </View>
+    const renderDot = React.useCallback(
+        () => (
+            <React.Fragment>
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [1, 0.8, 0.6, 0.4, 0.2, 0],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0.8, 0.6, 0.4, 0.2, 0, 1],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0.6, 0.4, 0.2, 0, 1, 0.8],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0.4, 0.2, 0, 1, 0.8, 0.6],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0.2, 0, 1, 0.8, 0.6, 0.4],
+                            }),
+                        },
+                    ]}
+                />
+                <Animated.View
+                    style={[
+                        styles.bar,
+                        style,
+                        {
+                            opacity: animatedValue.interpolate({
+                                inputRange,
+                                outputRange: [0, 1, 0.8, 0.6, 0.4, 0.2],
+                            }),
+                        },
+                    ]}
+                />
+            </React.Fragment>
+        ),
+        [animatedValue, inputRange, style],
     );
+    return <View style={{ flexDirection: 'row' }}>{renderDot()}</View>;
 });
 
 export default BipLoader;

@@ -1,96 +1,107 @@
 import React from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, Easing, StyleSheet, View } from 'react-native';
+import CompositeAnimation = Animated.CompositeAnimation;
 
 const styles = StyleSheet.create({
     container: {
         borderWidth: 1,
     },
-    circle: {
+    dot: {
         position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
     },
 });
 
 interface CircularLoaderProps {
-    size?: number;
+    dotSize?: number;
     circleSize?: number;
     color?: string;
     duration?: number;
+    numberOfDots?: number;
 }
 
 const CircularLoaderComponent: React.FunctionComponent<CircularLoaderProps> = ({
-    size = 25,
+    dotSize = 10,
+    circleSize = 100,
     color = '#0A57E7',
-    duration = 6000,
+    numberOfDots = 10,
+    duration = 500,
 }) => {
-    const circle = React.useRef(new Animated.Value(0)).current;
-    const circleSize = React.useMemo(() => size * 4, [size]);
-    const translate = React.useMemo(() => -circleSize * 3, [circleSize]);
+    const animatedValue = React.useRef(new Animated.Value(0)).current;
+
+    const runAnimation = React.useCallback(() => {
+        const animations: CompositeAnimation[] = [];
+        for (let i = -1; i < numberOfDots; i++) {
+            animations.push(
+                Animated.timing(animatedValue, { toValue: i, useNativeDriver: true, duration, easing: Easing.linear }),
+            );
+        }
+        Animated.sequence(animations).start(() => {
+            animatedValue.setValue(1);
+            runAnimation();
+        });
+    }, [animatedValue, duration, numberOfDots]);
 
     React.useEffect(() => {
-        Animated.loop(
-            Animated.sequence([
-                Animated.timing(circle, { toValue: 1, useNativeDriver: true, duration }),
-                Animated.timing(circle, { toValue: 0, useNativeDriver: true, duration }),
-            ]),
-        ).start();
-    }, [circle, circleSize, duration]);
+        runAnimation();
+    }, [runAnimation]);
 
-    return (
-        <View style={[styles.container, { width: circleSize, height: circleSize, borderRadius: circleSize / 2 }]}>
-            <Animated.View
-                style={[
-                    styles.circle,
-                    {
-                        height: size,
-                        width: size,
-                        backgroundColor: color,
-                        borderRadius: size / 2,
-                    },
-                    {
-                        transform: [
-                            {
-                                rotate: circle.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: ['0deg', '360deg'],
-                                }),
-                            },
-                            {
-                                translateX: circle.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [translate, translate],
-                                }),
-                            },
-                            {
-                                translateY: circle.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [translate, translate],
-                                }),
-                            },
-                        ],
-                    },
-                ]}
-            />
-            <View
-                style={[
-                    {
-                        borderWidth: 1,
-                        width: circleSize,
-                        height: circleSize,
-                        borderRadius: circleSize / 2,
-                        position: 'absolute',
-                        left: -circleSize / 2,
-                        top: -circleSize / 2,
-                    },
-                ]}
-            />
-        </View>
-    );
+    const inputRange = React.useMemo(() => [...Array(numberOfDots).keys()], [numberOfDots]);
+    const outputRanges = React.useMemo(() => {
+        const outputRanges: number[][] = [];
+        for (let i = 0; i < numberOfDots; i++) {
+            outputRanges.push(
+                Array.from({ length: numberOfDots }, (_, index) => {
+                    if (i === index - 1) {
+                        return 2;
+                    }
+                    if (i === index) {
+                        return 3;
+                    }
+                    return 1;
+                }),
+            );
+        }
+        return outputRanges;
+    }, [numberOfDots]);
+
+    const renderCircle = React.useCallback(() => {
+        const dots: JSX.Element[] = [];
+        for (let i = 0; i < numberOfDots; ++i) {
+            const size = circleSize / 2;
+            const left = size + size * Math.cos((2 * Math.PI * i) / numberOfDots);
+            const top = size + size * Math.sin((2 * Math.PI * i) / numberOfDots);
+            dots.push(
+                <Animated.View
+                    style={[
+                        styles.dot,
+                        {
+                            width: dotSize,
+                            height: dotSize,
+                            backgroundColor: color,
+                            borderRadius: dotSize,
+                            top,
+                            left,
+                            transform: [
+                                {
+                                    scale: animatedValue.interpolate({
+                                        inputRange,
+                                        outputRange: outputRanges[i],
+                                    }),
+                                },
+                            ],
+                        },
+                    ]}
+                    key={`circle-loader-dot-${i}`}
+                />,
+            );
+        }
+
+        return dots;
+    }, [animatedValue, circleSize, color, dotSize, inputRange, numberOfDots, outputRanges]);
+
+    return <View style={{ height: circleSize, width: circleSize }}>{renderCircle()}</View>;
 };
 
-const CircularLoader  = React.memo(CircularLoaderComponent);
+const CircularLoader = React.memo(CircularLoaderComponent);
 
 export default CircularLoader;

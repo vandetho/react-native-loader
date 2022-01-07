@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { BarLoader, BipLoader, FollowLoader, JumpingLoader, PulseLoader, SquareLoader } from './src';
+import { BarLoader, BipLoader, CircularLoader, FollowLoader, JumpingLoader, PulseLoader, SquareLoader } from './src';
 
 export default function App() {
     return (
@@ -23,6 +23,9 @@ export default function App() {
                 </View>
                 <View style={styles.row}>
                     <FollowLoader />
+                </View>
+                <View style={styles.row}>
+                    <CircularLoader />
                 </View>
             </ScrollView>
         </SafeAreaView>
